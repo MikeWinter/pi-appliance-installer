@@ -17,6 +17,9 @@ function main {
     install)
       install "${@}"
       ;;
+    directory)
+      show_directory
+      ;;
     *)
       show_usage
       ;;
@@ -48,16 +51,24 @@ function install {
   update_kernel_options "${volume}" "${kernel_options}"
 }
 
+function show_directory {
+  echo "${install_path}"
+}
+
 function show_usage {
   cat <<EOF
 Usage: ${0} build
        ${0} install VOLUME
+       ${0} directory
 
   The build command compiles the provisioner in preparation for installing it
   on the boot partition.
 
   The install command copies and configures the provisioner on the specified
   boot volume.
+
+  The directory command shows the relative directory where the provisioner
+  will be installed.
 EOF
 }
 
