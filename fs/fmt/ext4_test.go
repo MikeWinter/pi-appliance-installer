@@ -21,7 +21,7 @@ type Ext4TestSuite struct {
 		ExpectedErr  error
 	}
 
-	adapterMock *os.OsAdapterMock
+	adapterMock *os.AdapterMock
 	deviceMock  *dev.DeviceMock
 	rootFs      Filesystem
 	fs          Filesystem
@@ -78,7 +78,7 @@ func (s *Ext4TestSuite) SetupTest() {
 	s.rootFs = &fs{path: "/root"}
 	s.fs = NewExt4(s.deviceMock)
 
-	s.adapterMock = new(os.OsAdapterMock)
+	s.adapterMock = new(os.AdapterMock)
 	os.Adapter = s.adapterMock
 }
 

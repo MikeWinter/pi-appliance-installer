@@ -12,7 +12,7 @@ import (
 type SdCardTestSuite struct {
 	suite.Suite
 
-	adapterMock *os.OsAdapterMock
+	adapterMock *os.AdapterMock
 }
 
 func TestSdTestSuite(t *testing.T) {
@@ -20,7 +20,7 @@ func TestSdTestSuite(t *testing.T) {
 }
 
 func (s *SdCardTestSuite) SetupTest() {
-	s.adapterMock = new(os.OsAdapterMock)
+	s.adapterMock = new(os.AdapterMock)
 
 	os.Adapter = s.adapterMock
 }

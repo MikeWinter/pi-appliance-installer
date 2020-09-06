@@ -19,7 +19,7 @@ type TmpTestSuite struct {
 		ExpectedArgs []interface{}
 	}
 
-	adapterMock *os.OsAdapterMock
+	adapterMock *os.AdapterMock
 	rootFs      Filesystem
 	fs          Filesystem
 }
@@ -62,7 +62,7 @@ func (s *TmpTestSuite) SetupTest() {
 	s.rootFs = &fs{path: "/root"}
 	s.fs = NewTmp()
 
-	s.adapterMock = new(os.OsAdapterMock)
+	s.adapterMock = new(os.AdapterMock)
 	os.Adapter = s.adapterMock
 }
 

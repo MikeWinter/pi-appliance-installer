@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
-
-set -e
+set -eu
 
 readonly install_path="provisioner"
 readonly init_cmd="pi-boot-provisioner"
-readonly basedir="$(dirname $0)"
+readonly basedir="$(dirname "$0")"
 
 function main {
-  local command="${1}"
+  local -r command="${1}"
   shift || true
 
   case "${command}" in
@@ -34,13 +33,12 @@ function build {
   go get ./...
 
   echo "Building init..." 1>&2
-  go build
+  go build -o "${init_cmd}"
 }
 
 function install {
   local -r volume="${1}"
-  local kernel_options
-  local first_boot_cmd
+  local kernel_options first_boot_cmd
   kernel_options="$(load_kernel_options "${volume}")"
   first_boot_cmd="$(option_or "${kernel_options}" init "/sbin/init")"
 
@@ -89,11 +87,12 @@ function option {
   local -r options="${1}"
   local -r name="${2}"
 
-  if [[ "${options}" =~ "${name}"=([[:graph:]]+) ]]; then
+  if [[ "${options}" =~ "${name}"=([[:graph:]]+) ]]
+  then
     echo "${BASH_REMATCH[1]}"
-    return
+  else
+    fatal "Could not find '${name}' in kernel options."
   fi
-  fatal "Could not find '${name}' in kernel options."
 }
 
 function option_or {
@@ -101,7 +100,8 @@ function option_or {
   local -r name="${2}"
   local -r default="${3}"
 
-  if [[ "${options}" =~ "${name}"=([[:graph:]]+) ]]; then
+  if [[ "${options}" =~ "${name}"=([[:graph:]]+) ]]
+  then
     echo "${BASH_REMATCH[1]}"
   else
     echo "${default}"
@@ -109,9 +109,8 @@ function option_or {
 }
 
 function ensure_filesystem_is_expected {
-  local options="${1}"
-  local root
-  local root_fs
+  local -r options="${1}"
+  local root root_fs
 
   root="$(option "${options}" root)"
   if [[ "${root:0:9}" != "PARTUUID=" || "${root:(-3)}" != "-02" ]] && [[ "${root}" != "/dev/mmcblk0p2" ]] ; then

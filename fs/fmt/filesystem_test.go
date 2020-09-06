@@ -13,7 +13,7 @@ import (
 type FsTestSuite struct {
 	suite.Suite
 
-	adapterMock *os.OsAdapterMock
+	adapterMock *os.AdapterMock
 	rootFs      Filesystem
 }
 
@@ -22,16 +22,16 @@ func TestFsTestSuite(t *testing.T) {
 }
 
 func (s *FsTestSuite) SetupTest() {
-	s.adapterMock = new(os.OsAdapterMock)
+	s.adapterMock = new(os.AdapterMock)
 	s.rootFs = new(fs).AsRoot()
 
 	os.Adapter = s.adapterMock
 }
 
 func (s *FsTestSuite) TestRootFilesystemHasRootPath() {
-	path := s.rootFs.Path()
+	root := s.rootFs.Path()
 
-	s.EqualValues("/", path)
+	s.EqualValues("/", root)
 }
 
 func (s *FsTestSuite) TestMountsFilesystemRelativeToRoot() {

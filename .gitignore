@@ -6,6 +6,7 @@
 *.dll
 *.so
 *.dylib
+pi-boot-provisioner
 
 # Test binary, built with `go test -c`
 *.test
@@ -15,6 +16,7 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+pkg/
 
 ### direnv template
 .envrc

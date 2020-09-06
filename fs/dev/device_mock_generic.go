@@ -9,7 +9,7 @@ type DeviceMock struct {
 	mock.Mock
 }
 
-func (m DeviceMock) Path() path.Path {
+func (m *DeviceMock) Path() path.Path {
 	args := m.Called()
 	return args.Get(0).(path.Path)
 }

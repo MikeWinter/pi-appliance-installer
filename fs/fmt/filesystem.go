@@ -5,11 +5,6 @@ import (
 	"github.com/MikeWinter/pi-on-boot-provisioning/fs/path"
 )
 
-type fs struct {
-	parent Filesystem
-	path   path.Path
-}
-
 type Filesystem interface {
 	AsRoot() Filesystem
 	Mount(child Filesystem, at path.Path) error
@@ -21,6 +16,11 @@ type Filesystem interface {
 	setPath(path path.Path)
 	setParent(parent Filesystem)
 	onMount(at path.Path) error
+}
+
+type fs struct {
+	parent Filesystem
+	path   path.Path
 }
 
 func (fs *fs) AsRoot() Filesystem {
@@ -67,6 +67,6 @@ func (fs *fs) setParent(parent Filesystem) {
 	fs.parent = parent
 }
 
-func (fs fs) onMount(path path.Path) error {
+func (fs fs) onMount(path.Path) error {
 	return nil
 }
